@@ -2,7 +2,7 @@ FROM golang:1.20.4-alpine3.18 as builder
 RUN apk add make
 
 WORKDIR /app
-COPY ../ ./
+COPY ./go.mod ./go.sum ./
 RUN go mod download
 
 COPY . .
