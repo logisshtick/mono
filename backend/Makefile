@@ -13,4 +13,4 @@ container:
 	docker build -f build/Dockerfile -t svlz-backend:$(VERSION) ./
 
 up: container
-	docker run -d --name svlz-backend --rm -p $(PORT):$(PORT)
+	docker run -d --name svlz-backend --rm -p $(PORT):$(PORT) svlz-backend:$(VERSION)
