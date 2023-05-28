@@ -6,11 +6,48 @@ LDFLAGS	= -s -w
 
 all: $(NAME)
 
-$(NAME):
-	go build -ldflags='$(LDFLAGS)' -gcflags=all='$(GCFLAGS)' -o $(NAME) ./cmd/$(NAME)/$(NAME).go 
+gen:
+	go generate ./...
 
-container:
-	docker build -f build/Dockerfile -t svlz-backend:$(VERSION) ./
+$(NAME): gen
+	go build \
+		-ldflags='$(LDFLAGS)' \
+		-gcflags=all='$(GCFLAGS)' \
+		-o $(NAME) \
+		./cmd/$(NAME)/$(NAME).go 
 
-up: container
-	docker run -d --name svlz-backend --rm -p $(PORT):$(PORT) svlz-backend:$(VERSION)
+fmt:
+	go fmt ./...
+cfmt:
+	docker build \
+		-f ./build/Dockerfile-dev \
+		-t $(NAME)-dev:$(VERSION) \
+		./
+	docker run \
+		--rm \
+		--name $(NAME)-dev \
+		--mount type=bind,source="./",target="/app" \
+		-it \
+		$(NAME)-dev:$(VERSION) \
+		"make fmt"
+
+c:
+	docker build \
+		-f ./build/Dockerfile-prod \
+		-t $(NAME)-backend:$(VERSION) \
+		./
+
+up: c
+	docker run \
+		-d \
+		--rm \
+		--name $(NAME)-backend \
+		-p $(PORT):$(PORT) \
+		$(NAME)-backend:$(VERSION)
+
+down:
+	docker stop $(NAME)-backend	
+
+# for all how need it)
+sync:
+	git pull
