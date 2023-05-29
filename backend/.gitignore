@@ -24,3 +24,6 @@
 go.work
 
 svlz*
+
+# vim enjoyers swag
+*.swp

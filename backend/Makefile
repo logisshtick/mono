@@ -42,11 +42,17 @@ up: c
 		-d \
 		--rm \
 		--name $(NAME)-backend \
-		-p $(PORT):$(PORT) \
+		-p $(PORT):4433 \
 		$(NAME)-backend:$(VERSION)
+	@echo
+	@echo ----------------------------------
+	@echo Upped on port: $(PORT)
+	@echo Connect: http:/127.0.0.1:$(PORT)/
+	@echo ----------------------------------
+	@echo for stop exec: make down
 
 down:
-	docker stop $(NAME)-backend	
+	docker stop $(NAME)-backend
 
 # for all how need it)
 sync:
