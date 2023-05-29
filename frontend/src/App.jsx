@@ -1,7 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 
+function test() {
+  console.log("hi!")
+}
+
 function App() {
+
+  test();
+
+  
   return (
     <div className="App">
       <header className="App-header">
