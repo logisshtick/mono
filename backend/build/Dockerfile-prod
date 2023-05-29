@@ -9,11 +9,9 @@ COPY . .
 RUN make
 
 
-FROM alpine:3.18
+FROM scratch
 
 WORKDIR /app
 COPY --from=builder /app/svlz /app/app
-
-EXPOSE 4433
 
 ENTRYPOINT ["./app"]

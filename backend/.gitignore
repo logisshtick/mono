@@ -27,3 +27,6 @@ svlz*
 
 # vim enjoyers swag
 *.swp
+
+# ignore logs
+logs/

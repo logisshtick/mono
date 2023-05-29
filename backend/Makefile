@@ -1,8 +1,10 @@
 NAME	= svlz
 VERSION	= 0.1
 PORT	= 4433
+LOGFILENAME	= $(shell date '+%Y-%m-%d %H-%M-%S').log
 LDFLAGS	= -s -w
 # GCFLAGS	= -B -C
+CGO_ENABLED	= 0
 
 all: $(NAME)
 
@@ -15,6 +17,8 @@ $(NAME): gen
 		-gcflags=all='$(GCFLAGS)' \
 		-o $(NAME) \
 		./cmd/$(NAME)/$(NAME).go 
+clean:
+	rm ./$(NAME)
 
 fmt:
 	go fmt ./...
@@ -38,12 +42,18 @@ c:
 		./
 
 up: c
+	@if [ ! -d ./logs/ ]; then \
+		mkdir ./logs/; \
+	fi
 	docker run \
 		-d \
 		--rm \
 		--name $(NAME)-backend \
-		-p $(PORT):4433 \
-		$(NAME)-backend:$(VERSION)
+		--mount type=bind,source="./logs/",target="/app/logs" \
+		-p $(PORT):$(PORT) \
+		$(NAME)-backend:$(VERSION) \
+		-port $(PORT) \
+		-log-file "./logs/$(LOGFILENAME)"
 	@echo
 	@echo ----------------------------------
 	@echo Upped on port: $(PORT)
