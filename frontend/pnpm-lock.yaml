@@ -4,11 +4,20 @@ dependencies:
   preact:
     specifier: ^10.13.2
     version: 10.13.2
+  preact-i18n:
+    specifier: ^2.4.0-preactx
+    version: 2.4.0-preactx(preact@10.13.2)
+  preact-router:
+    specifier: ^4.1.1
+    version: 4.1.1(preact@10.13.2)
 
 devDependencies:
   '@preact/preset-vite':
     specifier: ^2.5.0
     version: 2.5.0(@babel/core@7.22.1)(preact@10.13.2)(vite@4.3.9)
+  '@types/preact-i18n':
+    specifier: ^2.3.2
+    version: 2.3.2
   typescript:
     specifier: ^5.0.2
     version: 5.0.2
@@ -561,6 +570,12 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /@types/preact-i18n@2.3.2:
+    resolution: {integrity: sha512-j1J/f9yzds7X3RP7oIO5wL+owXJyULv0qRWcX/eVGP/Ojw8SdTjXAi722vv2Iv5GtMgshVCS1QEQFJRT8/qwHQ==}
+    dependencies:
+      preact: 10.13.2
+    dev: true
+
   /ansi-styles@3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
     engines: {node: '>=4'}
@@ -625,6 +640,10 @@ packages:
     dependencies:
       ms: 2.1.2
     dev: true
+
+  /dlv@1.1.3:
+    resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
+    dev: false
 
   /electron-to-chromium@1.4.412:
     resolution: {integrity: sha512-lsdxyQVXw79Q1/yUWp4JDopW2M9pFjnbNF2/09d75qQL5ld8ddmGruQBeA0lP4HxcGIhrL0gFXqxJDWR58Whkw==}
@@ -775,6 +794,32 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
+
+  /preact-i18n@2.4.0-preactx(preact@10.13.2):
+    resolution: {integrity: sha512-XJ15wZKdJrpuz2KBs8BkDB9gl85MjIkER5tx8r6RM1+j53hw3/XzUq2DMnkMoLVQiS0VSPI6bXk41CioKwTJIA==}
+    peerDependencies:
+      preact: '>=10'
+    dependencies:
+      dlv: 1.1.3
+      preact: 10.13.2
+      preact-markup: 2.1.1(preact@10.13.2)
+    dev: false
+
+  /preact-markup@2.1.1(preact@10.13.2):
+    resolution: {integrity: sha512-8JL2p36mzK8XkspOyhBxUSPjYwMxDM0L5BWBZWxsZMVW8WsGQrYQDgVuDKkRspt2hwrle+Cxr/053hpc9BJwfw==}
+    peerDependencies:
+      preact: '>=10'
+    dependencies:
+      preact: 10.13.2
+    dev: false
+
+  /preact-router@4.1.1(preact@10.13.2):
+    resolution: {integrity: sha512-+LGrB3b2nR7+8vzyHw8i2/TjZazs3oMJovIEgBChPBXMDSISmwj2WDynZh8KDxZRK2GuXlqHPk15mMjaYWZH4g==}
+    peerDependencies:
+      preact: '>=10'
+    dependencies:
+      preact: 10.13.2
+    dev: false
 
   /preact@10.13.2:
     resolution: {integrity: sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==}
