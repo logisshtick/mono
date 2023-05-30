@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    networks:
+      - private
     ports:
       - 4433:4433
     restart: always
@@ -13,8 +15,29 @@ services:
     image: nginx:latest
     ports:
       - 443:443
+      - 4433:4433
+      - 80:80
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - private
     depends_on:
       - backend
     restart: always
+
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - private
+    restart: always
+    environment:
+      POSTGRES_USER: your_username
+      POSTGRES_PASSWORD: your_password
+
+networks:
+  private:
