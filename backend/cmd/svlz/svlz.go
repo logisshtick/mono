@@ -48,14 +48,13 @@ func init() {
 	flag.StringVar(&flagEndPointPrefix, "prefix", "/api", "set prefix for endpoints")
 	flag.Parse()
 
-	switch flagLogFile {
-	case "NULL":
-		mlog = log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
-		wlog = log.New(os.Stderr, "WARNING: ", log.Ldate|log.Ltime|log.Lshortfile)
-		elog = log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
-	default:
+	if flagLogFile == "NULL" {
+		mlog = log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
+		wlog = log.New(os.Stderr, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
+		elog = log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
+	} else {
 		if flagLogFile == "GEN" {
-			flagLogFile = time.Now().Format("2006-01-02 15:04:05") + ".log"
+			flagLogFile = time.Now().Format("2006-01-02 15-04-05") + ".log"
 		}
 		file, err := os.OpenFile(flagLogFile,
 			os.O_APPEND|os.O_CREATE|os.O_WRONLY,
@@ -64,9 +63,9 @@ func init() {
 			fmt.Fprint(os.Stderr, err)
 			os.Exit(1)
 		}
-		mlog = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
-		wlog = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Lshortfile)
-		elog = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
+		mlog = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
+		wlog = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
+		elog = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
 	}
 
 	for _, e := range endPoints {

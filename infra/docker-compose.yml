@@ -6,13 +6,13 @@ services:
       context: ../backend/
       dockerfile: ./build/Dockerfile-prod
     volumes:
-      - ./logs:/app/logs:wo
+      - ./logs:/app/logs:rw
     networks:
       - private
     depends_on:
       - postgres
     restart: always
-    command: -port 4433 -log-file GEN -prefix /api
+    command: -port 4433 -prefix /api
 
   nginx:
     image: nginx:1.25.0
