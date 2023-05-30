@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"strings"
 	"net/http"
 	"os"
 	"os/signal"
@@ -53,8 +54,8 @@ func init() {
 		wlog = log.New(os.Stderr, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
 		elog = log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
 	} else {
-		if flagLogFile == "GEN" {
-			flagLogFile = time.Now().Format("2006-01-02 15-04-05") + ".log"
+		if strings.HasSuffix(flagLogFile, "GEN") {
+			flagLogFile = flagLogFile[:len(flagLogFile)-3] + time.Now().Format("2006-01-02 15-04-05") + ".log"
 		}
 		file, err := os.OpenFile(flagLogFile,
 			os.O_APPEND|os.O_CREATE|os.O_WRONLY,

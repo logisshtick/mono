@@ -65,7 +65,7 @@ up: c
 down:
 	docker stop $(NAME)-backend
 
-# for all how need it)
+# for all who need it)
 sync:
 	git pull
 

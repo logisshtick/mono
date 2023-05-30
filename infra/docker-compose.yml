@@ -12,7 +12,7 @@ services:
     depends_on:
       - postgres
     restart: always
-    command: -port 4433 -prefix /api
+    command: -port 4433 -log-file ./logs/GEN -prefix /api
 
   nginx:
     image: nginx:1.25.0
