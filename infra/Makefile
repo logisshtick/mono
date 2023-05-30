@@ -1,6 +1,14 @@
+PWD	= $(shell pwd)
+
 all: up
 
-up:
+gen-static:
+	cd ../frontend; \
+		make call; \
+		mv ./static/ ../infra/static/; \
+	cd $(PWD)
+
+prepare:
 	@if [ ! -f ./.env ]; then \
 		touch .env; \
 	fi
@@ -9,6 +17,7 @@ up:
 		mkdir ./logs/; \
 	fi
 
+up: gen-static prepare
 	docker compose up
 
 down:
