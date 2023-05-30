@@ -9,7 +9,7 @@ dependencies:
     specifier: ^10.13.2
     version: 10.13.2
   preact-i18n:
-    specifier: ^2.4.0-preactx
+    specifier: 2.4.0-preactx
     version: 2.4.0-preactx(preact@10.13.2)
   preact-router:
     specifier: ^4.1.1
