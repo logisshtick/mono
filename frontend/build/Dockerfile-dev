@@ -1,0 +1,7 @@
+FROM node:20.2-alpine3.16
+RUN apk add make
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+ENTRYPOINT ["sh", "-c"]
