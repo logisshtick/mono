@@ -5,7 +5,7 @@ all: up
 gen-static:
 	cd ../frontend; \
 		make call; \
-		mv ./static/ ../infra/static/; \
+		mv ./static/ ../infra/; \
 	cd $(PWD)
 
 prepare:
@@ -22,3 +22,6 @@ up: gen-static prepare
 
 down:
 	docker compose down
+
+clean:
+	rm -r static
