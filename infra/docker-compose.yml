@@ -7,8 +7,6 @@ services:
       dockerfile: Dockerfile
     networks:
       - private
-    ports:
-      - 4433:4433
     restart: always
 
   nginx:
@@ -28,8 +26,6 @@ services:
 
   postgres:
     image: postgres:latest
-    ports:
-      - 5432:5432
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     networks:
