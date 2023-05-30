@@ -19,4 +19,3 @@ call: c
 		-it \
 		$(NAME)-front-dev:latest \
 		"make"
-	mv dist/ static/
