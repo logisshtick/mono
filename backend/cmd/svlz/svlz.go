@@ -11,7 +11,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/logisshtick/mono/internal/route"
+	// "github.com/logisshtick/mono/internal/route"
 	"github.com/logisshtick/mono/internal/test"
 )
 
@@ -25,7 +25,7 @@ type endPoint struct {
 var (
 	endPoints = [...]endPoint{
 		{"/swag", test.Start, test.Handler, test.Stop},
-		{"/route", route.Start, route.Handler, route.Stop},
+		// {"/route", route.Start, route.Handler, route.Stop},
 	}
 
 	mlog *log.Logger

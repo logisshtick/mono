@@ -1,7 +1,7 @@
 all: up
 
 up:
-	@if [ ! -f ./.env]; then \
+	@if [ ! -f ./.env ]; then \
 		touch .env; \
 	fi
 	
