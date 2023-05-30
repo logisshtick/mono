@@ -35,9 +35,8 @@ services:
     networks:
       - private
     restart: always
-    environment:
-      POSTGRES_USER: your_username
-      POSTGRES_PASSWORD: your_password
+    env_file:
+      - .env
 
 networks:
   private:
