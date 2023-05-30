@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"time"
 	"net/http"
 	"os"
 	"os/signal"
@@ -47,11 +48,15 @@ func init() {
 	flag.StringVar(&flagEndPointPrefix, "prefix", "/api", "set prefix for endpoints")
 	flag.Parse()
 
-	if flagLogFile == "NULL" {
+	switch flagLogFile {
+	case "NULL":
 		mlog = log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
 		wlog = log.New(os.Stderr, "WARNING: ", log.Ldate|log.Ltime|log.Lshortfile)
 		elog = log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
-	} else {
+	default:
+		if flagLogFile == "GEN" {
+			flagLogFile = time.Now().Format("2006-01-02 15:04:05") + ".log"
+		}
 		file, err := os.OpenFile(flagLogFile,
 			os.O_APPEND|os.O_CREATE|os.O_WRONLY,
 			0666)

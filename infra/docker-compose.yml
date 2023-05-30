@@ -3,11 +3,16 @@ version: '3'
 services:
   backend:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../backend/build/
+      dockerfile: Dockerfile-prod
+    volumes:
+      - ./logs:/app/logs:wo
     networks:
       - private
+    depends_on:
+      - postgres
     restart: always
+    command: -port 4433 -log-file GEN
 
   nginx:
     image: nginx:latest

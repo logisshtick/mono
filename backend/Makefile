@@ -68,3 +68,5 @@ down:
 # for all how need it)
 sync:
 	git pull
+
+
