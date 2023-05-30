@@ -34,6 +34,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Stop() error {
-	mlog.Println("%s test module stoped\n", endPoint)
+	mlog.Printf("%s test module stoped\n", endPoint)
 	return nil
 }

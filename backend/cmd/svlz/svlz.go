@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/logisshtick/mono/internal/route"
 	"github.com/logisshtick/mono/internal/test"
 )
 
@@ -22,6 +23,7 @@ type endPoint struct {
 var (
 	endPoints = [...]endPoint{
 		{"/swag", test.Start, test.Handler, test.Stop},
+		{"/route", route.Start, route.Handler, route.Stop},
 	}
 
 	mlog *log.Logger
@@ -102,10 +104,10 @@ func main() {
 	}()
 
 	for _, e := range endPoints {
-		http.HandleFunc(flagEndPointPrefix + e.name, e.handler)
+		http.HandleFunc(flagEndPointPrefix+e.name, e.handler)
 	}
 
-	err := http.ListenAndServe(":" + flagPort, nil)
+	err := http.ListenAndServe(":"+flagPort, nil)
 	if err != nil {
 		stop()
 		elog.Fatal(err)

@@ -2,6 +2,7 @@ NAME	= svlz
 VERSION	= 0.1
 PORT	= 4433
 LOGFILENAME	= $(shell date '+%Y-%m-%d %H-%M-%S').log
+PWD		= $(shell pwd)
 LDFLAGS	= -s -w
 # GCFLAGS	= -B -C
 CGO_ENABLED	= 0
@@ -30,7 +31,7 @@ cfmt:
 	docker run \
 		--rm \
 		--name $(NAME)-dev \
-		--mount type=bind,source="./",target="/app" \
+		--mount type=bind,source="$(PWD)/",target="/app" \
 		-it \
 		$(NAME)-dev:$(VERSION) \
 		"make fmt"
@@ -49,7 +50,7 @@ up: c
 		-d \
 		--rm \
 		--name $(NAME)-backend \
-		--mount type=bind,source="./logs/",target="/app/logs" \
+		--mount type=bind,source="$(PWD)/logs/",target="/app/logs" \
 		-p $(PORT):$(PORT) \
 		$(NAME)-backend:$(VERSION) \
 		-port $(PORT) \
