@@ -3,7 +3,7 @@ function Home() {
 		<>
 			<p>SVLZ</p>
 			
-
+			
 			
         </>
 	)
