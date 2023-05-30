@@ -3,10 +3,13 @@ PWD	= $(shell pwd)
 all: up
 
 gen-static:
+	@if [ -d ./static/ ]; then \
+		rm -rf static/; \
+	fi
+
 	cd ../frontend; \
-		make call; \
-		mv ./static/ ../infra/; \
-	cd $(PWD)
+		make call
+	cp -r ../frontend/dist/ ../infra/static/
 
 prepare:
 	@if [ ! -f ./.env ]; then \
@@ -18,7 +21,7 @@ prepare:
 	fi
 
 up: gen-static prepare
-	docker compose up
+	docker compose up -d
 
 down:
 	docker compose down
