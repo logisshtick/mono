@@ -12,6 +12,8 @@ services:
     depends_on:
       - postgres
     restart: always
+    env_file:
+      - .env
     command: -port 4433 -log-file ./logs/GEN -prefix /api
 
   nginx:
