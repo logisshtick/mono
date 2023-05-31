@@ -9,7 +9,7 @@ COPY . .
 RUN make
 
 
-FROM scratch
+FROM alpine:3.18.0
 
 WORKDIR /app
 COPY --from=builder /app/svlz /app/app
