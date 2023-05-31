@@ -25,14 +25,14 @@ func Start(ep string, m *log.Logger, w *log.Logger, e *log.Logger) error {
 	wlog = w
 	elog = e
 
-	mlog.Printf("%s route module inited\n", endPoint)
-
 	var err error
-	client, err = maps.NewClient(maps.WithAPIKey(os.Getenv("GOOGLE_MAPS_API")))
+	client, err = maps.NewClient(maps.WithAPIKey(os.Getenv("GOOGLE_MAPS_API_KEY")))
 	if err != nil {
 		elog.Printf("Failed to create Google Maps client: %v\n", err)
 		return err
 	}
+
+	mlog.Printf("%s route module inited\n", endPoint)
 
 	return nil
 }
