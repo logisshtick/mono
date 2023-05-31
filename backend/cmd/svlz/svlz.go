@@ -8,6 +8,8 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"runtime"
+	"reflect"
 	"syscall"
 	"time"
 
@@ -43,6 +45,16 @@ func endPointFailure(err error) {
 	}
 }
 
+func getFuncName(i any) string {
+	funcStr := strings.Split(
+		runtime.FuncForPC(
+		    reflect.ValueOf(i).Pointer(),
+		).Name(), "/",
+	)
+
+	return funcStr[len(funcStr)-1]
+}
+
 func init() {
 	flag.StringVar(&flagLogFile, "log-file", "NULL", "set log file location")
 	flag.StringVar(&flagPort, "port", "4433", "set http server port")
@@ -69,10 +81,7 @@ func init() {
 		elog = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
 	}
 
-	for _, e := range endPoints {
-		err := e.start(e.name, mlog, wlog, elog)
-		endPointFailure(err)
-	}
+	start()
 }
 
 func main() {
@@ -119,15 +128,26 @@ func main() {
 	}
 }
 
-func stop() {
-	for _, e := range endPoints {
-		err := e.stop()
+func start() {
+	for i, e := range endPoints {
+		mlog.Printf("%s %s() start called\n", e.name, getFuncName(e.start))
+		err := e.start(e.name, mlog, wlog, elog)
 		if err != nil {
-			elog.Fatal(err)
+			for j := 0; j <= i; j++ {
+				mlog.Printf("%s %s() stop called\n", endPoints[j].name, getFuncName(endPoints[j].stop))
+				endPoints[j].stop()
+			}
+			endPointFailure(err)
 		}
 	}
 }
 
-func HelloServer(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
+func stop() {
+	for _, e := range endPoints {
+		mlog.Printf("%s %s() called\n", e.name, getFuncName(e.stop))
+		err := e.stop()
+		if err != nil {
+			elog.Print(err)
+		}
+	}
 }
