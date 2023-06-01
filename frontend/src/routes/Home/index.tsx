@@ -1,10 +1,7 @@
 function Home() {
 	return (
 		<>
-			<p>SVLZ</p>
-			
-			
-			
+			<h1>Home</h1>
         </>
 	)
 }

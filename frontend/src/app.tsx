@@ -3,6 +3,9 @@ import { IntlProvider } from 'preact-i18n';
 import { useEffect, useState } from 'preact/hooks';
 
 import Home from './routes/Home';
+import Settings from './routes/Settings';
+
+import Header from './components/Header';
 
 
 export function App() {
@@ -18,13 +21,14 @@ export function App() {
 	}, []);
 
 	return (
-		<IntlProvider scope="weather" definition={definition}>
-
-		<Router>
-			<Route path="/" component={Home} />
-			
-		</Router>
-
+		<IntlProvider definition={definition}>
+			<main >
+				<Header />
+				<Router>
+					<Route path="/" component={Home} />
+					<Route path="/settings" component={Settings} />
+				</Router>
+			</main>
 		</IntlProvider>
 	)
 }
