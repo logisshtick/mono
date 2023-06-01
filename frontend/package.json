@@ -17,9 +17,12 @@
     "@preact/preset-vite": "^2.5.0",
     "@types/google.maps": "^3.53.2",
     "@types/preact-i18n": "^2.3.2",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "^2.8.8",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
     "vite-plugin-compression": "^0.5.1",
     "zlib": "^1.0.5"
   }
 }
+
