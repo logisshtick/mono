@@ -4,6 +4,7 @@ import { useEffect, useState } from 'preact/hooks';
 
 import Home from './routes/Home';
 import Settings from './routes/Settings';
+import Login from './routes/Login';
 
 import Header from './components/Header';
 
@@ -12,11 +13,13 @@ export function App() {
 	const [definition, setDefinition] = useState({});
 
 	async function fetchLocale() {
-		let definition = await fetch(`${import.meta.env.VITE_API_URL}/translations`);
+		const definition = await fetch(`${import.meta.env.VITE_API_URL}/translations`);
 		setDefinition(definition);
 	}
 
 	useEffect(() => {
+		
+
 		fetchLocale();
 	}, []);
 
@@ -27,6 +30,7 @@ export function App() {
 				<Router>
 					<Route path="/" component={Home} />
 					<Route path="/settings" component={Settings} />
+					<Route path="/login" component={Login} />
 				</Router>
 			</main>
 		</IntlProvider>
