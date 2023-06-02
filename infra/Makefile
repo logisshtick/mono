@@ -56,15 +56,15 @@ gen-static:
 	cp -r ../frontend/dist/ ../infra/static/
 
 prepare:
-	@if [ ! -f ./.env ]; then \
-		touch .env; \
-	fi
-	
+ifeq (,$(wildcard ./.env))
+	$(error .env secret swag is not here, plz get that swag)
+endif
+
 	@if [ ! -d ./logs/ ]; then \
 		mkdir ./logs/; \
 	fi
 
-up: gen-static prepare down-local-postgres
+up: prepare gen-static down-local-postgres
 	docker compose up -d --build
 
 	@echo
