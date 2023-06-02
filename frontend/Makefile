@@ -5,13 +5,24 @@ $(NAME):
 	pnpm i
 	pnpm run build
 
+prepare:
+	@if [ ! -d ./dist ]; then \
+		mkdir ./dist; \
+	fi
+	@if [ ! -d ./node_modules ]; then \
+		mkdir ./node_modules; \
+	fi
+	@if [ ! -d ./.pnpm-store ]; then \
+		mkdir ./.pnpm-store; \
+	fi
+
 c:
 	docker build \
 		-f ./build/Dockerfile-dev \
 		-t $(NAME)-front-dev:latest \
 		./
 
-call: c
+call: prepare c
 	docker run \
 		--rm \
 		--name $(NAME)-front-dev \
@@ -19,3 +30,8 @@ call: c
 		-it \
 		$(NAME)-front-dev:latest \
 		"make"
+
+clean:
+	rm -rf ./dist
+	rm -rf ./node_modules
+	rm -rf ./.pnpm-store
