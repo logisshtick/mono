@@ -5,6 +5,12 @@ $(NAME):
 	pnpm i
 	pnpm run build
 
+lint:
+	pnpm run lint
+
+lint-fix:
+	pnpm run lint-fix
+
 prepare:
 	@if [ ! -d ./dist ]; then \
 		mkdir ./dist; \

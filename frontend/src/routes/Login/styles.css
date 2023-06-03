@@ -1,0 +1,41 @@
+body {
+    background: linear-gradient(291.29deg, #EDBAFF 18.49%, #CFD4FF 76.02%);
+}
+
+.wrapper {
+    background: rgba(255, 255, 255, 0.81);
+    border: 2px solid #FFFFFF;
+    backdrop-filter: blur(2px);
+    height: 100%;
+    width: 700px;
+    top: 0;
+    right: 0;
+    position: fixed;
+    padding: 75px;
+}
+
+.wrapper input {
+    background: white;
+    color: black;
+    border: none;
+    width: 200px;
+    padding: 15px;
+
+    border-radius: 10px;
+}
+
+.wrapper button {
+    background: black;
+    transition: 0.2s;
+    color: white;
+    border: none;
+    width: 200px;
+    padding: 15px;
+
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.wrapper button:active {
+    transform: scale(0.97);
+}

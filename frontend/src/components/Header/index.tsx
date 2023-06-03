@@ -5,7 +5,7 @@ import './styles.css';
 function Header() {
 	return (
 		<header>
-			<nav>
+			<nav>	
 				<Link activeClassName="selected" href="/" aria-label="Home">Home</Link>
 				<Link activeClassName="selected" href="/settings" aria-label="Settings">Settings</Link>
 			</nav>

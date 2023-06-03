@@ -1,0 +1,14 @@
+header {
+    background: rgba(255, 255, 255, 0.81);
+    border: 2px solid #FFFFFF;
+    backdrop-filter: blur(2px);
+    height: 100%;
+    width: 80px;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+header nav {
+    
+}
