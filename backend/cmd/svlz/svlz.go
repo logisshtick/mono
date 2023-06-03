@@ -7,12 +7,13 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strings"
-	"runtime"
 	"reflect"
+	"runtime"
+	"strings"
 	"syscall"
 	"time"
 
+	"github.com/logisshtick/mono/internal/login"
 	"github.com/logisshtick/mono/internal/route"
 	"github.com/logisshtick/mono/internal/test"
 )
@@ -26,6 +27,7 @@ type endPoint struct {
 
 var (
 	endPoints = [...]endPoint{
+		{"/login", login.Start, login.Handler, login.Stop},
 		{"/swag", test.Start, test.Handler, test.Stop},
 		{"/route", route.Start, route.Handler, route.Stop},
 	}
@@ -48,7 +50,7 @@ func endPointFailure(err error) {
 func getFuncName(i any) string {
 	funcStr := strings.Split(
 		runtime.FuncForPC(
-		    reflect.ValueOf(i).Pointer(),
+			reflect.ValueOf(i).Pointer(),
 		).Name(), "/",
 	)
 

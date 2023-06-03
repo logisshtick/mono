@@ -1,12 +1,14 @@
 // if u want to write simple rest api endpoint
 // copy this example)
 
-package test
+package login
 
 import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/logisshtick/mono/pkg/auth"
 )
 
 var (
@@ -21,6 +23,11 @@ func Start(ep string, m *log.Logger, w *log.Logger, e *log.Logger) error {
 	mlog = m
 	wlog = w
 	elog = e
+
+	err := auth.Init()
+	if err != nil {
+		return err
+	}
 
 	mlog.Printf("%s test module inited\n", endPoint)
 	return nil

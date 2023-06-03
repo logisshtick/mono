@@ -43,7 +43,7 @@ drop-migrations:
 		$(MIGRATE_CONTAINER) \
 		-path /migrate -database "$(POSTGRES_URL)" down
 
-down-local-postgres: make-migrations
+down-local-postgres: 
 	docker stop postgres-local-dev
 
 gen-static:
@@ -64,7 +64,7 @@ endif
 		mkdir ./logs/; \
 	fi
 
-up: prepare gen-static down-local-postgres
+up: down prepare gen-static make-migrations down-local-postgres
 	docker compose up -d --build
 
 	@echo
