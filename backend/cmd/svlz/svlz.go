@@ -13,9 +13,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/logisshtick/mono/internal/login"
-	"github.com/logisshtick/mono/internal/route"
-	"github.com/logisshtick/mono/internal/test"
+	"github.com/logisshtick/mono/internal/endpoints/login"
+	"github.com/logisshtick/mono/internal/endpoints/route"
+	"github.com/logisshtick/mono/internal/endpoints/test"
 )
 
 type endPoint struct {

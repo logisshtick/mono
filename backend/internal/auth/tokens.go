@@ -19,6 +19,7 @@ var (
 	ErrDeviceIdLenIsBiggerThanExpected = errors.New("Device id len is bigger than expected.")
 )
 
+// gen new hash by device id string
 func HashDeviceId(deviceId string) (uint64, error) {
 	if len(deviceId) > maxDeviceIdLen {
 		return 0, ErrDeviceIdLenIsBiggerThanExpected
@@ -27,6 +28,7 @@ func HashDeviceId(deviceId string) (uint64, error) {
 	return xxhash.Sum64String(deviceId), nil
 }
 
+// check is access token correct and not expired
 func ValidateAccessToken(token uint64) (bool, error) {
 	timeNow := time.Now().Unix()
 
@@ -42,6 +44,7 @@ func ValidateAccessToken(token uint64) (bool, error) {
 	return true, nil
 }
 
+// generate new tokens pair by user account id and device id
 func GenTokensPair(id int, deviceId uint64) (uint64, string, error) {
 	timeNow := time.Now().Unix()
 

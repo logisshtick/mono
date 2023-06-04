@@ -65,6 +65,8 @@ func init() {
 	hashVarSet()
 }
 
+// public init method that used
+// for activate logic that can return error
 func Init() error {
 	if inited {
 		return nil
