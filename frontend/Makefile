@@ -1,8 +1,22 @@
 NAME	= svlz
 
-all: $(NAME)
-$(NAME):
+all: build
+
+prepare:
+	@if [ ! -d ./node_modules ]; then \
+		mkdir ./node_modules; \
+	fi
+	@if [ ! -d ./.pnpm-store ]; then \
+		mkdir ./.pnpm-store; \
+	fi
+	@if [ ! -d ./dist ]; then \
+		mkdir ./dist; \
+	fi
+
+dep-install:
 	pnpm i
+
+build: dep-install
 	pnpm run build
 
 lint:
@@ -11,24 +25,13 @@ lint:
 lint-fix:
 	pnpm run lint-fix
 
-prepare:
-	@if [ ! -d ./dist ]; then \
-		mkdir ./dist; \
-	fi
-	@if [ ! -d ./node_modules ]; then \
-		mkdir ./node_modules; \
-	fi
-	@if [ ! -d ./.pnpm-store ]; then \
-		mkdir ./.pnpm-store; \
-	fi
-
 c:
 	docker build \
 		-f ./build/Dockerfile-dev \
 		-t $(NAME)-front-dev:latest \
 		./
 
-call: prepare c
+call: prepare
 	docker run \
 		--rm \
 		--name $(NAME)-front-dev \
