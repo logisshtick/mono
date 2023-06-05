@@ -15,18 +15,32 @@ function Login() {
 
 	return (
 		<>
-			<div class="wrapper">
-				<h1>
-					<Text id="authorize">Authorize</Text>
-				</h1>
-				<form>
-					<label>Email</label>
-					<input type="text" placeholder="sema_pidoras@proton.me" />
-					<label><Text id="password">Password</Text></label>
-					<input type="password" placeholder="" />
+			<div class="background">
+				<div class="wrapper">
+					<h1>
+						<Text id="welcome">Welcome 👋</Text>
+					</h1>
+					<p>
+						<Text id="description">Enter your credentials or create new logisshtickID to continue</Text>
+					</p>
+					<div class="selector">
+						<button id="signIn">
+							<Text id="signIn">Sign In</Text>
+						</button>
+						<button id="createNewAccount">
+							<Text id="createNewAccount">Create new account</Text>
+						</button>
+					</div>
 
-					<button onClick={() => auth()}><Text id="signIn">Sign In</Text></button>
-				</form>
+					<form>
+						<label id="email">Email</label>
+						<input type="text" placeholder="sema_pidoras@proton.me" />
+						<label><Text id="password">Password</Text></label>
+						<input type="password" placeholder="" />
+
+						<button onClick={() => auth()}><Text id="continue">Continue</Text></button>
+					</form>
+				</div>
 			</div>
         </>
 	)

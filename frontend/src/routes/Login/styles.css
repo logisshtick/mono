@@ -1,30 +1,32 @@
 body {
-    background: linear-gradient(291.29deg, #EDBAFF 18.49%, #CFD4FF 76.02%);
+    background: radial-gradient(54.24% 162.96% at 61.56% 38.96%, #DE82FF 0%, #FF8E8E 39.58%, #75ACFF 100%);
 }
 
-.wrapper {
+.background {
     background: rgba(255, 255, 255, 0.81);
-    border: 2px solid #FFFFFF;
     backdrop-filter: blur(2px);
     height: 100%;
-    width: 700px;
+    width: 100%;
     top: 0;
     right: 0;
     position: fixed;
     padding: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.wrapper input {
+.background input {
     background: white;
     color: black;
     border: none;
     width: 200px;
     padding: 15px;
-
+    outline: none;
     border-radius: 10px;
 }
 
-.wrapper button {
+.background form button {
     background: black;
     transition: 0.2s;
     color: white;
@@ -36,6 +38,27 @@ body {
     cursor: pointer;
 }
 
-.wrapper button:active {
+.background form button:active {
     transform: scale(0.97);
+}
+
+.background .wrapper {
+    display: grid;
+    height: fit-content;
+}
+.background .wrapper .selector button {
+    width: fit-content;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.background .wrapper form {
+    display: grid;
+    gap: 10px;
+    width: fit-content;
+    height: fit-content;
+}
+.background form input {
+    padding: 10px;
 }

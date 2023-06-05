@@ -1,5 +1,8 @@
 {
-    "authorize": "Authorize",
+    "welcome": "Welcome 👋",
+    "description": "Enter your credentials or create new logisshtickID to continue",
     "password": "Password",
-    "signIn": "Sign In"
+    "createNewAccount": "Create new account",
+    "signIn": "Sign In",
+    "continue": "Continue"
 }
