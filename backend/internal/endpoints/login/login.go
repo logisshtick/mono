@@ -37,14 +37,11 @@ package login
 
 import (
 	//"fmt"
-	"encoding/json"
-	"io"
 	"log"
 	"net/http"
 
 	"github.com/logisshtick/mono/internal/auth"
 	"github.com/logisshtick/mono/internal/utils"
-	"github.com/logisshtick/mono/internal/vars"
 )
 
 var (
@@ -55,9 +52,9 @@ var (
 )
 
 type input struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	DeviceId string `json:"device_id"`
+	Email    string `json:"email"     validate:"required"`
+	Password string `json:"password"  validate:"required"`
+	DeviceId string `json:"device_id" validate:"required"`
 }
 
 type output struct {
@@ -85,44 +82,32 @@ func Start(ep string, m *log.Logger, w *log.Logger, e *log.Logger) error {
 func Handler(w http.ResponseWriter, r *http.Request) {
 	mlog.Printf("%s connected %s\n", r.URL.Path, r.RemoteAddr)
 
-	if utils.ValidateContentLenAndSendResponse(w, r.ContentLength, &output{}) {
+	out := output{}
+	in := input{}
+
+	if utils.ErrWithContentLen(w, &out, r.ContentLength) {
 		elog.Printf("%s body len too big: %d\n", r.URL.Path, r.ContentLength)
 		return
 	}
 
-	input := input{}
-	body, err := io.ReadAll(r.Body)
+	body, err := utils.BodyReading(w, r, &out)
 	if err != nil {
 		elog.Printf("%s body reading failed: %v\n", r.URL.Path, err)
-		utils.WriteJsonAndStatusInRespone(
-			w, http.StatusInsufficientStorage,
-			&output{
-				Err: vars.ErrBodyReadingFailed.Error(),
-			},
-		)
 		return
 	}
-	err = json.Unmarshal(body, &input)
-	if err != nil {
-		elog.Printf("%s body json is incorrect: %v\n", r.URL.Path, err)
-		utils.WriteJsonAndStatusInRespone(
-			w, http.StatusUnprocessableEntity,
-			&output{
-				Err: vars.ErrInputJsonIsIncorrect.Error(),
-			},
-		)
+
+	if utils.UnmarshalJson(w, &in, &out, body) {
+		elog.Printf("%s body json is incorrect\n", r.URL.Path)
 		return
 	}
 
 	const userId = 123
-	deviceIdHash, err := auth.HashDeviceId(input.DeviceId)
+	deviceIdHash, err := auth.HashDeviceId(in.DeviceId)
 	if err != nil {
 		elog.Printf("%s deviceId hashing failed: %v\n", r.URL.Path, err)
-		utils.WriteJsonAndStatusInRespone(
-			w, http.StatusUnprocessableEntity,
-			&output{
-				Err: err.Error(),
-			},
+		out.Err = err.Error()
+		utils.WriteJsonAndStatusInRespone(w, &out,
+			http.StatusUnprocessableEntity,
 		)
 		return
 	}
@@ -131,14 +116,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		userId,
 		deviceIdHash,
 	)
-	output := output{
+	out = output{
 		Err:          "nil",
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
 	}
-	utils.WriteJsonAndStatusInRespone(
-		w, http.StatusOK,
-		&output,
+	utils.WriteJsonAndStatusInRespone(w, &out,
+		http.StatusOK,
 	)
 }
 

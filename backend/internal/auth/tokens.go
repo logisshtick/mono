@@ -4,6 +4,8 @@ import (
 	"errors"
 	"github.com/cespare/xxhash"
 	"time"
+
+	"github.com/logisshtick/mono/internal/utils"
 )
 
 const (
@@ -29,12 +31,16 @@ func HashDeviceId(deviceId string) (uint64, error) {
 }
 
 // check is access token correct and not expired
-func ValidateAccessToken(token uint64) (bool, error) {
+func ValidateAccessToken(tkn uint64) (bool, error) {
 	timeNow := time.Now().Unix()
 
-	maps.accessTsRmu.RLock()
-	t, ok := maps.accessTs[token]
-	maps.accessTsRmu.RUnlock()
+	var (
+		t token
+		ok bool
+	)
+	utils.ExecRWMutex(&maps.accessTsRmu, func() {
+		t, ok = maps.accessTs[tkn]
+	})
 	if !ok {
 		return false, ErrAccessTNotFound
 	}
@@ -57,21 +63,21 @@ func GenTokensPair(id int, deviceId uint64) (uint64, string, error) {
 		return 0, "", err
 	}
 
-	maps.accessTsRmu.Lock()
-	maps.accessTs[hash] = token{
-		date:     timeNow,
-		id:       id,
-		deviceId: deviceId,
-	}
-	maps.accessTsRmu.Unlock()
+	utils.ExecMutex(&maps.accessTsRmu, func() {
+		maps.accessTs[hash] = token{
+			date:     timeNow,
+			id:       id,
+			deviceId: deviceId,
+		}
+	})
 
-	maps.refreshTsRmu.Lock()
-	maps.refreshTs[uid] = token{
-		date:     timeNow,
-		id:       id,
-		deviceId: deviceId,
-	}
-	maps.refreshTsRmu.Unlock()
+	utils.ExecMutex(&maps.refreshTsRmu, func() {
+		maps.refreshTs[uid] = token{
+			date:     timeNow,
+			id:       id,
+			deviceId: deviceId,
+		}
+	})
 
 	return hash, uid, nil
 }
@@ -82,21 +88,25 @@ func GenTokensPair(id int, deviceId uint64) (uint64, string, error) {
 func RegenTokensPair(access uint64, refresh string) (uint64, string, error) {
 	timeNow := time.Now().Unix()
 
-	maps.accessTsRmu.RLock()
-	t, ok := maps.accessTs[access]
-	maps.accessTsRmu.RUnlock()
+	var (
+		t token
+		ok bool
+	)
+	utils.ExecRWMutex(&maps.accessTsRmu, func() {
+		t, ok = maps.accessTs[access]
+	})
 	if ok {
 		if timeNow-t.date < accessTLife {
 			return 0, "", ErrAccessTNotExpired
 		}
-		maps.accessTsRmu.Lock()
-		delete(maps.accessTs, access)
-		maps.accessTsRmu.Unlock()
+		utils.ExecMutex(&maps.accessTsRmu, func() {
+			delete(maps.accessTs, access)
+		})
 	}
 
-	maps.refreshTsRmu.RLock()
-	t, ok = maps.refreshTs[refresh]
-	maps.refreshTsRmu.RUnlock()
+	utils.ExecRWMutex(&maps.refreshTsRmu, func() {
+		t, ok = maps.refreshTs[refresh]
+	})
 	if !ok {
 		return 0, "", ErrRefreshTNotFound
 	}
@@ -104,12 +114,9 @@ func RegenTokensPair(access uint64, refresh string) (uint64, string, error) {
 		return 0, "", ErrRefreshTExpired
 	}
 
-	id := t.id             // user account id
-	deviceId := t.deviceId // uniq session id
+	utils.ExecMutex(&maps.refreshTsRmu, func() {
+		delete(maps.refreshTs, refresh)
+	})
 
-	maps.refreshTsRmu.Lock()
-	delete(maps.refreshTs, refresh)
-	maps.refreshTsRmu.Unlock()
-
-	return GenTokensPair(id, deviceId)
+	return GenTokensPair(t.id, t.deviceId)
 }

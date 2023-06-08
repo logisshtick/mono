@@ -3,6 +3,7 @@ VERSION	= 0.1
 PORT	= 4433
 LOGFILENAME	= $(shell date '+%Y-%m-%d %H-%M-%S').log
 PWD		= $(shell pwd)
+# BUILDFLAGS	= -race
 LDFLAGS	= -s -w
 # GCFLAGS	= -B -C
 CGO_ENABLED	= 0
@@ -14,6 +15,7 @@ gen:
 
 $(NAME): gen
 	go build \
+		$(BUILDFLAGS) \
 		-ldflags='$(LDFLAGS)' \
 		-gcflags=all='$(GCFLAGS)' \
 		-o $(NAME) \
