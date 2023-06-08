@@ -3,10 +3,10 @@
 package utils
 
 import (
-	"net/http"
 	"encoding/json"
-	"reflect"
 	"io"
+	"net/http"
+	"reflect"
 
 	"github.com/logisshtick/mono/internal/vars"
 )
@@ -48,7 +48,7 @@ func ErrWithBodyReading[T any](w http.ResponseWriter, j *T, err error) bool {
 	return false
 }
 
-// read request body and send 
+// read request body and send
 // response if any error exist
 func BodyReading[T any](w http.ResponseWriter, r *http.Request, j *T) ([]byte, error) {
 	body, err := io.ReadAll(r.Body)
@@ -84,4 +84,3 @@ func ErrNotNilSendResponse[T any](w http.ResponseWriter, j *T, status int, err e
 	}
 	return false
 }
-

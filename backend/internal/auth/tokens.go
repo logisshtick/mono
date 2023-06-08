@@ -35,7 +35,7 @@ func ValidateAccessToken(tkn uint64) (bool, error) {
 	timeNow := time.Now().Unix()
 
 	var (
-		t token
+		t  token
 		ok bool
 	)
 	utils.ExecRWMutex(&maps.accessTsRmu, func() {
@@ -89,7 +89,7 @@ func RegenTokensPair(access uint64, refresh string) (uint64, string, error) {
 	timeNow := time.Now().Unix()
 
 	var (
-		t token
+		t  token
 		ok bool
 	)
 	utils.ExecRWMutex(&maps.accessTsRmu, func() {

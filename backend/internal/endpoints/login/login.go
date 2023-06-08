@@ -30,9 +30,10 @@
 //	  access token type is uint64
 //
 // future fixes:
-//   add util func for auto json validation as we want
-//   add work with db
-//   remove code duplications
+//
+//	add util func for auto json validation as we want
+//	add work with db
+//	remove code duplications
 package login
 
 import (

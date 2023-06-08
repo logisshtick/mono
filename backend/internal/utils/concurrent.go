@@ -24,4 +24,3 @@ func ExecMutex[T mutex](m T, f func()) {
 	f()
 	m.Unlock()
 }
-
