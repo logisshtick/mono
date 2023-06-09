@@ -62,3 +62,9 @@ body {
 .background form input {
     padding: 10px;
 }
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+}
