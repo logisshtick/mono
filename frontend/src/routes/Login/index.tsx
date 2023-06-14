@@ -21,7 +21,14 @@ function Login() {
 				<div class="wrapper">
 					<div id="QRWindow">
 						<img src="https://cdn.discordapp.com/attachments/1112822004014391347/1116692420722176021/image.png" />
+
+						<div class="qrSettings">
+								<Text id="qrDescription">Settings - Security - Scan QR</Text>
+						</div>
+
 					</div>
+
+
 					<div id="authWindow">
 						<h1>
 							<Text id="welcome">Welcome</Text>
@@ -58,8 +65,6 @@ function Login() {
 							<button onClick={() => auth()}><Text id="continue">Continue</Text></button>
 						</form>
 					</div>
-
-					
 
 				</div>
 
