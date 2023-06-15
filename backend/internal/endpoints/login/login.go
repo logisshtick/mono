@@ -53,9 +53,9 @@ var (
 )
 
 type input struct {
-	Email    string `json:"email"     validate:"required"`
-	Password string `json:"password"  validate:"required"`
-	DeviceId string `json:"device_id" validate:"required"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	DeviceId string `json:"device_id"`
 }
 
 type output struct {

@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/logisshtick/mono/internal/endpoints/login"
+	"github.com/logisshtick/mono/internal/endpoints/reg"
 	"github.com/logisshtick/mono/internal/endpoints/route"
 	"github.com/logisshtick/mono/internal/endpoints/test"
 )
@@ -28,6 +29,7 @@ type endPoint struct {
 var (
 	endPoints = [...]endPoint{
 		{"/login", login.Start, login.Handler, login.Stop},
+		{"/reg", reg.Start, reg.Handler, reg.Stop},
 		{"/swag", test.Start, test.Handler, test.Stop},
 		{"/route", route.Start, route.Handler, route.Stop},
 	}
