@@ -31,7 +31,7 @@ c:
 		-t $(NAME)-front-dev:latest \
 		./
 
-call: prepare
+call: prepare c
 	docker run \
 		--rm \
 		--name $(NAME)-front-dev \

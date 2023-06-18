@@ -1,8 +1,9 @@
+include .env
+
 PWD	= $(shell pwd)
 MIGRATE_CONTAINER	= migrate/migrate:v4.16.0
 POSTGRES_CONTAINER	= postgres:15.3-alpine3.18
-POSTGRES_PASSWORD	= test-password
-POSTGRES_URL	= postgres://postgres:$(POSTGRES_PASSWORD)@127.0.0.1:5432/postgres?sslmode=disable
+POSTGRES_URL	= postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@127.0.0.1:5432/postgres?sslmode=disable
 
 all: up
 
@@ -18,7 +19,9 @@ up-local-postgres:
 		--mount type=bind,source="$(PWD)/postgres/data",target="/var/lib/postgresql/data" \
 		-p 5432:5432 \
 		-e POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) \
+		-e POSTGRES_USER=$(POSTGRES_USER) \
 		$(POSTGRES_CONTAINER)
+	@sleep 1
 
 # we cant make migrations without postgres container
 # so we dont need make container task

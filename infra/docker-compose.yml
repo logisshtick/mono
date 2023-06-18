@@ -30,7 +30,6 @@ services:
       - backend
     restart: always
 
-
   postgres:
     image: postgres:15.3-alpine3.18
     volumes:
