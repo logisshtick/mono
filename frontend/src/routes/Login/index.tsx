@@ -17,8 +17,8 @@ function Login() {
 	return (
 		<>
 			<div class="background">
-
 				<div class="wrapper">
+					
 					<div id="QRWindow">
 						<img src="https://cdn.discordapp.com/attachments/1112822004014391347/1116692420722176021/image.png" />
 
@@ -63,6 +63,8 @@ function Login() {
 							<input type="password" placeholder="" />
 
 							<button onClick={() => auth()}><Text id="continue">Continue</Text></button>
+
+							<button id="anotherLog" onClick={() => auth()}><Text id="anotherL">Continue</Text></button>	
 						</form>
 					</div>
 

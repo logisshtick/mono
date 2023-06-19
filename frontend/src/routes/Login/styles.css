@@ -113,3 +113,11 @@ p {
     width: 175px;
     text-decoration: none;
 }
+
+#anotherLog {
+    background: transparent;
+    color: black;
+    width: fit-content;
+    justify-self: center;
+}
+
