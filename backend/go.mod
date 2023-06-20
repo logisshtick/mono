@@ -6,6 +6,7 @@ require (
 	github.com/cespare/xxhash v1.1.0
 	github.com/google/uuid v1.1.1
 	github.com/jackc/pgx/v5 v5.4.0
+	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1
 	googlemaps.github.io/maps v1.4.0
 )
 

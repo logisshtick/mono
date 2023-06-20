@@ -6,10 +6,7 @@ import (
 	"time"
 
 	"github.com/logisshtick/mono/internal/utils"
-)
-
-const (
-	maxDeviceIdLen = 4096
+	"github.com/logisshtick/mono/internal/constant"
 )
 
 var (
@@ -23,7 +20,7 @@ var (
 
 // gen new hash by device id string
 func HashDeviceId(deviceId string) (uint64, error) {
-	if len(deviceId) > maxDeviceIdLen {
+	if len(deviceId) > constant.C.MaxDeviceIdLen {
 		return 0, ErrDeviceIdLenIsBiggerThanExpected
 	}
 	// i really dont trust what frontenders send for me)

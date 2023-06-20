@@ -29,9 +29,11 @@ import (
 	"log"
 	"net/http"
 
+
 	"github.com/logisshtick/mono/internal/db"
 	"github.com/logisshtick/mono/internal/utils"
 	"github.com/logisshtick/mono/internal/vars"
+	"github.com/logisshtick/mono/internal/constant"
 
 	"github.com/jackc/pgx/v5"
 )
@@ -96,9 +98,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len(in.Pass) > 64 ||
-		len(in.Nick) > 64 ||
-		len(in.Email) > 256 {
+	if len(in.Pass) > constant.C.RegMaxPasswordLen ||
+		len(in.Nick) > constant.C.RegMaxNicknameLen ||
+		len(in.Email) > constant.C.RegMaxEmailLen {
 		elog.Printf("%s json fields is too big\n", endPoint)
 		out.Err = vars.ErrFieldTooBig.Error()
 		utils.WriteJsonAndStatusInRespone(w, &out,

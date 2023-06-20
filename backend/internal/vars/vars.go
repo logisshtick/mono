@@ -6,10 +6,6 @@ import (
 	"errors"
 )
 
-const (
-	MaxHttpBodyLen = 16384
-)
-
 var (
 	ErrWithDb               = errors.New("An Error with db.")
 	ErrBodyLenIsTooBig      = errors.New("Request body too len for processing.")

@@ -9,6 +9,7 @@ import (
 	"reflect"
 
 	"github.com/logisshtick/mono/internal/vars"
+	"github.com/logisshtick/mono/internal/constant"
 )
 
 // set error field in any struct if it exist
@@ -25,9 +26,9 @@ func SetErrorField[T any](j *T, err error) {
 }
 
 // if contentLen > maxlen
-// start f func, write response with error and return true
+// write response with error and return true
 func ErrWithContentLen[T any](w http.ResponseWriter, j *T, contentLen int64) bool {
-	if contentLen > vars.MaxHttpBodyLen {
+	if contentLen > constant.C.MaxHttpBodyLen {
 		return ErrNotNilSendResponse(w, j,
 			http.StatusRequestEntityTooLarge,
 			vars.ErrBodyLenIsTooBig,
@@ -64,6 +65,9 @@ func BodyReading[T any](w http.ResponseWriter, r *http.Request, j *T) ([]byte, e
 
 // unmarshal json and validate
 func UnmarshalJson[T, Y any](w http.ResponseWriter, in *T, out *Y, bytes []byte) bool {
+	if !json.Valid(bytes) {
+		return true
+	}
 	err := json.Unmarshal(bytes, in)
 	if err != nil {
 		ErrNotNilSendResponse(w, out,

@@ -4,16 +4,16 @@
 //
 // input:
 //
-//		{
-//		  "email": "example@mail.com",
-//		  "password": "example_password",
-//	       "device_id": "any uniq to session key",
-//		}
+//	{
+//	  "email": "example@mail.com",
+//	  "password": "example_password",
+//	  "device_id": "any uniq to session key",
+//	}
 //
-//		notes:
-//		  max username len 64
-//		  max password len 64
-//		  max email    len 256
+//	notes:
+//	  max username len 64
+//	  max password len 64
+//	  max email    len 256
 //
 // output:
 //
