@@ -1,0 +1,24 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  preact-media-hook:
+    specifier: ^1.0.3
+    version: 1.0.3(preact@10.15.1)
+
+packages:
+
+  /preact-media-hook@1.0.3(preact@10.15.1):
+    resolution: {integrity: sha512-Vl32i29Hyb5DGg7atJ/Fp4dXhMrgRG9n3/99tRfxH7Wixapgguil0PGnzgXJMOWisPp/VAx6ShlWhXVaTYMITg==}
+    peerDependencies:
+      preact: ^10.0.0
+    dependencies:
+      preact: 10.15.1
+    dev: false
+
+  /preact@10.15.1:
+    resolution: {integrity: sha512-qs2ansoQEwzNiV5eAcRT1p1EC/dmEzaATVDJNiB3g2sRDWdA7b7MurXdJjB2+/WQktGWZwxvDrnuRFbWuIr64g==}
+    dev: false
