@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -11,6 +11,9 @@ dependencies:
   preact-i18n:
     specifier: 2.4.0-preactx
     version: 2.4.0-preactx(preact@10.13.2)
+  preact-media-hook:
+    specifier: ^1.0.3
+    version: 1.0.3(preact@10.13.2)
   preact-router:
     specifier: ^4.1.1
     version: 4.1.1(preact@10.13.2)
@@ -4796,6 +4799,14 @@ packages:
     resolution: {integrity: sha512-8JL2p36mzK8XkspOyhBxUSPjYwMxDM0L5BWBZWxsZMVW8WsGQrYQDgVuDKkRspt2hwrle+Cxr/053hpc9BJwfw==}
     peerDependencies:
       preact: '>=10'
+    dependencies:
+      preact: 10.13.2
+    dev: false
+
+  /preact-media-hook@1.0.3(preact@10.13.2):
+    resolution: {integrity: sha512-Vl32i29Hyb5DGg7atJ/Fp4dXhMrgRG9n3/99tRfxH7Wixapgguil0PGnzgXJMOWisPp/VAx6ShlWhXVaTYMITg==}
+    peerDependencies:
+      preact: ^10.0.0
     dependencies:
       preact: 10.13.2
     dev: false
