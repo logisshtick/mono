@@ -8,15 +8,17 @@
 }
 
 :root[data-theme=light] {
-    --background-origin: hsl(0, 0%, 100%);
-    --text-color:hsl(0, 0%, 3%);
-    
+    --background-color: hsl(0, 0%, 100%);
+    --button-color: hsl(0, 0%, 0%);
+    --button-text: hsl(0, 0%, 99%);
+    --main-text: hsl(0, 0%, 9%);
+    --qr-color: hsl(0, 0%, 0%);
 }
 
 :root[data-theme=dark] {
-    --background-origin:hsl(0, 1%, 23%);
-    --main-color: hsl(0, 0%, 15%);
-    --button-color: hsl(0, 44%, 100%);
-    --text-color: hsl(175, 5%, 99%);
-
+    --background-color: hsl(0, 0%, 7%)
+    --button-color: hsl(0, 44%, 78%)
+    --button-text: hsl(0, 0%, 100%)
+    --main-text: hsl(175, 5%, 97%)
+    --qr-color: hsl(175, 5%, 97%)
 }

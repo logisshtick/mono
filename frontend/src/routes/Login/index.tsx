@@ -26,6 +26,7 @@ function Login() {
 								<Text id="qrDescription">Settings - Security - Scan QR</Text>
 						</div>
 
+						
 					</div>
 
 
