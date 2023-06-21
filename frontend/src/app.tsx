@@ -11,6 +11,9 @@ import Login from './routes/Login';
 import Header from './components/Header';
 import Splash from './components/Splash';
 
+import { useMediaPredicate } from 'preact-media-hook';
+
+
  
 export function App() {
 	const [definition, setDefinition] = useState({});
@@ -22,6 +25,11 @@ export function App() {
 
 		setDefinition(localeStrings);
 	}
+
+	const isDarkTheme = useMediaPredicate("(prefers-color-scheme: dark)");
+
+	const theme = isDarkTheme ? "dark" : "light";
+    document.querySelector("html")?.setAttribute("data-theme", theme);
 
 	useEffect(() => {
 		fetchLocale();
