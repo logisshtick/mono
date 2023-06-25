@@ -18,6 +18,8 @@ function Login() {
 		<>
 			<div class="background">
 				<div class="wrapper">
+
+					
 					
 					<div id="QRWindow">
 						<img src="https://cdn.discordapp.com/attachments/1112822004014391347/1116692420722176021/image.png" />
@@ -31,6 +33,12 @@ function Login() {
 
 
 					<div id="authWindow">
+
+					<label class="switch">
+  						<input type="checkbox" />
+  						<span class="slider round"></span>
+					</label>
+
 						<h1>
 							<Text id="welcome">Welcome</Text>
 							<svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -67,6 +75,8 @@ function Login() {
 
 							<button id="anotherLog" onClick={() => auth()}><Text id="anotherL">Continue</Text></button>	
 						</form>
+
+					
 					</div>
 
 				</div>

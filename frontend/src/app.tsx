@@ -52,3 +52,7 @@ export function App() {
 		</IntlProvider>
 	)
 }
+
+
+
+
