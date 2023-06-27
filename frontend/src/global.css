@@ -16,9 +16,10 @@
 }
 
 :root[data-theme=dark] {
-    --background-color: hsl(0, 0%, 7%);
-    --button-color: hsl(0, 44%, 78%);
-    --button-text: hsl(0, 0%, 100%);
-    --main-text: hsl(175, 5%, 80%);
-    --qr-color: hsl(175, 5%, 97%);
-} 
+    --background-color1: hsl(0, 0%, 7%);
+    --background1: hsl(243, 100%, 7%);
+    --button-color1: linear-gradient(90deg, rgba(255,142,142,1) 0%, rgba(222,130,255,1) 100%);
+    --button-text1: hsl(0, 0%, 100%);
+    --main-text1: hsl(175, 5%, 80);
+    --qr-color1: hsl(175, 5%, 97%);
+}

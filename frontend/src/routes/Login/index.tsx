@@ -34,10 +34,6 @@ function Login() {
 
 					<div id="authWindow">
 
-					<label class="switch">
-  						<input type="checkbox" />
-  						<span class="slider round"></span>
-					</label>
 
 						<h1>
 							<Text id="welcome">Welcome</Text>
