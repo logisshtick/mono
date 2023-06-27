@@ -67,7 +67,7 @@ function Login() {
 
 						<form>
 							<label id="email">Email</label>
-							<input type="text" placeholder="sema_pidoras@proton.me" />
+							<input type="text" placeholder="123@gmail.com" />
 							<label><Text id="password">Password</Text></label>
 							<input type="password" placeholder="" />
 
