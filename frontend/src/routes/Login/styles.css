@@ -32,9 +32,6 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 500;
-    background: var(--background1);
-    color: var(--button-color1);
-}
 
 .background form button:active {
     transform: scale(0.97);
@@ -124,5 +121,4 @@ p {
     color: black;
     width: fit-content;
     justify-self: center;
-
-}
+} }
