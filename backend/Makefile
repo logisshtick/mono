@@ -69,6 +69,6 @@ down:
 
 # for all who need it)
 sync:
-	git pull
+	git pull+
 
 
