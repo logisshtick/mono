@@ -1,10 +1,12 @@
 body {
     background: radial-gradient(54.24% 162.96% at 61.56% 38.96%, #DE82FF 0%, #FF8E8E 39.58%, #75ACFF 100%);
     user-select: none;
+
+    color: var(--font-color);
 }
 
 .background {
-    background: rgba(255, 255, 255, 0.81);
+    background: var(--background-login-wrapper);
     backdrop-filter: blur(2px);
     height: 100%;
     width: 100%;
@@ -15,16 +17,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--background-color1);
 }
 
 .background form button {
-    background: black;
+    background: var(--continue-button-background);
     transition: 0.2s;
-    color: white;
     border: none;
     width: 100%;
     padding: 12px;
+
+    color: white;
 
     border-radius: 10px;
     cursor: pointer;
@@ -32,7 +34,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 500;
-
+}
 .background form button:active {
     transform: scale(0.97);
 }
@@ -57,7 +59,7 @@ body {
     gap: 10px;
 }
 .background form input {
-    background: white;
+    background: var(--textfield-color);
     color: black;
     border: none;
     padding: 12px;
@@ -118,7 +120,7 @@ p {
 
 #anotherLog {
     background: transparent;
-    color: black;
     width: fit-content;
     justify-self: center;
-} }
+    color: var(--font-color);
+}

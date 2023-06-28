@@ -8,18 +8,17 @@
 }
 
 :root[data-theme=light] {
-    --background-color: hsl(0, 0%, 100%);
-    --button-color: hsl(0, 0%, 0%);
-    --button-text: hsl(0, 0%, 99%);
-    --main-text: hsl(0, 0%, 9%);
-    --qr-color: hsl(0, 0%, 0%);
+    --background-login-wrapper: hsla(0, 0%, 100%, 0.8);
+    --font-color: hsl(0, 0%, 0%);
+    --textfield-color: white;
+
+    --continue-button-background: black;
 }
 
 :root[data-theme=dark] {
-    --background-color1: hsl(0, 0%, 7%);
-    --background1: hsl(243, 100%, 7%);
-    --button-color1: linear-gradient(90deg, rgba(255,142,142,1) 0%, rgba(222,130,255,1) 100%);
-    --button-text1: hsl(0, 0%, 100%);
-    --main-text1: hsl(175, 5%, 80);
-    --qr-color1: hsl(175, 5%, 97%);
+    --background-login-wrapper: hsla(0, 0%, 7%, 0.8);
+    --font-color: hsl(0, 0%, 100%);
+    --textfield-color: hsl(0, 1%, 21%);
+
+    --continue-button-background: linear-gradient(90deg, hsl(0, 100%, 78%) 0%, hsl(284, 100%, 75%) 100%);
 }
