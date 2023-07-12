@@ -9,21 +9,21 @@ import (
 type constants struct {
 	RegMaxPasswordLen int
 	RegMaxNicknameLen int
-	RegMaxEmailLen int
-	MaxHttpBodyLen int64
-	MaxDeviceIdLen int
+	RegMaxEmailLen    int
+	MaxHttpBodyLen    int64
+	MaxDeviceIdLen    int
 }
 
 var (
 	inited bool
 
 	CJson []byte
-	C = constants{
+	C     = constants{
 		RegMaxPasswordLen: 64,
 		RegMaxNicknameLen: 64,
-		RegMaxEmailLen: 256,
-		MaxHttpBodyLen: 16384,
-		MaxDeviceIdLen: 4096,
+		RegMaxEmailLen:    256,
+		MaxHttpBodyLen:    16384,
+		MaxDeviceIdLen:    4096,
 	}
 )
 

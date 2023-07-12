@@ -12,4 +12,5 @@ var (
 	ErrInputJsonIsIncorrect = errors.New("Input json is incorrect.")
 	ErrBodyReadingFailed    = errors.New("Error while req body reading.")
 	ErrFieldTooBig          = errors.New("Json field is too big.")
+	ErrActionLimited        = errors.New("Action limited. Try another time.")
 )

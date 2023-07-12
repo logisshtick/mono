@@ -5,8 +5,8 @@ import (
 	"github.com/cespare/xxhash"
 	"time"
 
-	"github.com/logisshtick/mono/internal/utils"
 	"github.com/logisshtick/mono/internal/constant"
+	"github.com/logisshtick/mono/pkg/mu"
 )
 
 var (
@@ -35,7 +35,7 @@ func ValidateAccessToken(tkn uint64) (bool, error) {
 		t  token
 		ok bool
 	)
-	utils.ExecRWMutex(&maps.accessTsRmu, func() {
+	mu.ExecRWMutex(&maps.accessTsRmu, func() {
 		t, ok = maps.accessTs[tkn]
 	})
 	if !ok {
@@ -60,7 +60,7 @@ func GenTokensPair(id int, deviceId uint64) (uint64, string, error) {
 		return 0, "", err
 	}
 
-	utils.ExecMutex(&maps.accessTsRmu, func() {
+	mu.ExecMutex(&maps.accessTsRmu, func() {
 		maps.accessTs[hash] = token{
 			date:     timeNow,
 			id:       id,
@@ -68,7 +68,7 @@ func GenTokensPair(id int, deviceId uint64) (uint64, string, error) {
 		}
 	})
 
-	utils.ExecMutex(&maps.refreshTsRmu, func() {
+	mu.ExecMutex(&maps.refreshTsRmu, func() {
 		maps.refreshTs[uid] = token{
 			date:     timeNow,
 			id:       id,
@@ -89,19 +89,19 @@ func RegenTokensPair(access uint64, refresh string) (uint64, string, error) {
 		t  token
 		ok bool
 	)
-	utils.ExecRWMutex(&maps.accessTsRmu, func() {
+	mu.ExecRWMutex(&maps.accessTsRmu, func() {
 		t, ok = maps.accessTs[access]
 	})
 	if ok {
 		if timeNow-t.date < accessTLife {
 			return 0, "", ErrAccessTNotExpired
 		}
-		utils.ExecMutex(&maps.accessTsRmu, func() {
+		mu.ExecMutex(&maps.accessTsRmu, func() {
 			delete(maps.accessTs, access)
 		})
 	}
 
-	utils.ExecRWMutex(&maps.refreshTsRmu, func() {
+	mu.ExecRWMutex(&maps.refreshTsRmu, func() {
 		t, ok = maps.refreshTs[refresh]
 	})
 	if !ok {
@@ -111,7 +111,7 @@ func RegenTokensPair(access uint64, refresh string) (uint64, string, error) {
 		return 0, "", ErrRefreshTExpired
 	}
 
-	utils.ExecMutex(&maps.refreshTsRmu, func() {
+	mu.ExecMutex(&maps.refreshTsRmu, func() {
 		delete(maps.refreshTs, refresh)
 	})
 

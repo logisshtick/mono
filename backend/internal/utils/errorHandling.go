@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"reflect"
 
-	"github.com/logisshtick/mono/internal/vars"
 	"github.com/logisshtick/mono/internal/constant"
+	"github.com/logisshtick/mono/internal/vars"
 )
 
 // set error field in any struct if it exist
@@ -54,7 +54,7 @@ func ErrWithBodyReading[T any](w http.ResponseWriter, j *T, err error) bool {
 func BodyReading[T any](w http.ResponseWriter, r *http.Request, j *T) ([]byte, error) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		ErrNotNilSendResponse(w, &j,
+		ErrNotNilSendResponse(w, j,
 			http.StatusInsufficientStorage,
 			vars.ErrBodyReadingFailed,
 		)

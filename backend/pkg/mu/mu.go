@@ -1,12 +1,12 @@
-package utils
+// lock mutex for funcs
+// with some runtime overhead
+package mu
 
 import (
 	"sync"
 )
 
 type mutex interface {
-	*sync.RWMutex | *sync.Mutex
-
 	Lock()
 	Unlock()
 }

@@ -8,10 +8,10 @@ package auth
 import (
 	"bufio"
 	crand "crypto/rand"
-	"math/rand"
 	"errors"
 	"github.com/cespare/xxhash"
 	"github.com/google/uuid"
+	"math/rand"
 	"os"
 )
 
