@@ -11,6 +11,7 @@
     "lint-fix": "eslint src --quiet --fix"
   },
   "dependencies": {
+    "go-qrcode": "link:github.com/skip2/go-qrcode",
     "preact": "^10.13.2",
     "preact-i18n": "2.4.0-preactx",
     "preact-media-hook": "^1.0.3",

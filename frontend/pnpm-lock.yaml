@@ -1,10 +1,13 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
 dependencies:
+  go-qrcode:
+    specifier: link:github.com/skip2/go-qrcode
+    version: link:github.com/skip2/go-qrcode
   preact:
     specifier: ^10.13.2
     version: 10.13.2
