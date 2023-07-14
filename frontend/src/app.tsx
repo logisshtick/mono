@@ -31,6 +31,7 @@ export function App() {
 	const theme = isDarkTheme ? "dark" : "light";
     document.querySelector("html")?.setAttribute("data-theme", theme);
 
+
 	useEffect(() => {
 		fetchLocale();
 
