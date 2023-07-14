@@ -1,16 +1,14 @@
-// here i generate xxhash and uuid
+// here i generates rand bytes slice
 // based on system random generator
 // /dev/random or /dev/urandom
 // i can afford it since everything
 // runs on linux
-package auth
+package cryptograph
 
 import (
 	"bufio"
 	crand "crypto/rand"
 	"errors"
-	"github.com/cespare/xxhash"
-	"github.com/google/uuid"
 	"math/rand"
 	"os"
 )
@@ -21,7 +19,7 @@ const (
 	cryptSafeRand = false
 
 	// amount of bytes from what we
-	// generate xxhash and uuid
+	// generate products
 	// more = better. but slower
 	// >= 256
 	bytesCount = 4096
@@ -67,14 +65,15 @@ func initChecks() error {
 	return nil
 }
 
-func randByteSlice(bytes []byte) error {
+// fill slice with random bytes
+func RandByteSlice(bytes []byte) error {
 	f, err := os.Open(randFile)
 	if err != nil {
 		return randByteSliceFallback(bytes)
 	}
 	br := bufio.NewReader(f)
 
-	for i := 0; i < bytesCount; i++ {
+	for i := 0; i < len(bytes); i++ {
 		b, err := br.ReadByte()
 		if err != nil {
 			return randByteSliceFallback(bytes)
@@ -100,32 +99,4 @@ func randByteSliceFallback(bytes []byte) error {
 		return ErrRandBytesGen
 	}
 	return nil
-}
-
-func genHash() (uint64, error) {
-	bytes := make([]byte, bytesCount)
-	err := randByteSlice(bytes)
-	if err != nil {
-		return 0, err
-	}
-	return xxhash.Sum64(bytes), nil
-}
-
-func genUuid() (string, error) {
-	bytes := make([]byte, bytesCount)
-	err := randByteSlice(bytes)
-	if err != nil {
-		return "", err
-	}
-	uid, err := uuid.FromBytes(bytes)
-	if err != nil {
-		for i := 0; i < retryesAmount; i++ {
-			uid, err = uuid.NewUUID()
-			if err == nil {
-				break
-			}
-			return "", err
-		}
-	}
-	return uid.String(), nil
 }

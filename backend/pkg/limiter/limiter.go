@@ -6,8 +6,8 @@ package limiter
 
 import (
 	"github.com/logisshtick/mono/pkg/mu"
-	"sync"
 	"runtime"
+	"sync"
 	"time"
 
 	"golang.org/x/exp/constraints"
@@ -37,18 +37,18 @@ const (
 
 type action struct {
 	deltaTime int64
-	count     uint64
+	count     int
 }
 
 type Limiter[T constraints.Ordered] struct {
-	m         map[T]action
-	mu        sync.RWMutex
-	maxTime   int64
-	maxCount  uint64
-	maxMapLen  int
-	cleanAtOnce uint64
-	cleaned bool
-	cleanedMu sync.RWMutex
+	m           map[T]action
+	mu          sync.RWMutex
+	maxTime     int64
+	maxCount    int
+	maxMapLen   int
+	cleanAtOnce int
+	cleaning    bool
+	cleaningMu  sync.RWMutex
 }
 
 // make new limiter for type T with maxCount for all actions
@@ -60,8 +60,11 @@ type Limiter[T constraints.Ordered] struct {
 // and clean up will never happen
 // also u can use limiter.Default const
 func New[T constraints.Ordered](
-	maxCount uint64, maxTime int64, 
-	mapLen, maxMapLen int, cleanAtOnce uint64,
+	maxCount int,
+	maxTime int64,
+	mapLen,
+	maxMapLen,
+	cleanAtOnce int,
 ) *Limiter[T] {
 	if maxCount <= 0 {
 		maxCount = defaultMaxCount
@@ -77,10 +80,10 @@ func New[T constraints.Ordered](
 	}
 
 	return &Limiter[T]{
-		m:         make(map[T]action, mapLen),
-		maxTime:   maxTime,
-		maxCount:  maxCount,
-		maxMapLen: maxMapLen,
+		m:           make(map[T]action, mapLen),
+		maxTime:     maxTime,
+		maxCount:    maxCount,
+		maxMapLen:   maxMapLen,
 		cleanAtOnce: cleanAtOnce,
 	}
 }
@@ -104,7 +107,7 @@ func (l *Limiter[T]) Try(id T) bool {
 		})
 		return true
 	}
-	if timeNow-a.deltaTime < l.maxTime && 
+	if timeNow-a.deltaTime < l.maxTime &&
 		a.count >= l.maxCount {
 		return false
 	}
@@ -123,20 +126,19 @@ func (l *Limiter[T]) Try(id T) bool {
 	return true
 }
 
-
 func (l *Limiter[T]) Clean() {
-	var cleanedState bool
-	mu.ExecRWMutex(&l.cleanedMu, func() {
-		cleanedState = l.cleaned
+	var cleaningState bool
+	mu.ExecRWMutex(&l.cleaningMu, func() {
+		cleaningState = l.cleaning
 	})
-	if cleanedState {
+	if cleaningState {
 		return
 	}
-	mu.ExecMutex(&l.cleanedMu, func() {
-		l.cleaned = true
+	mu.ExecMutex(&l.cleaningMu, func() {
+		l.cleaning = true
 	})
 
-	var i uint64
+	var i int
 	mu.ExecMutex(&l.mu, func() {
 		for key, val := range l.m {
 			if i == l.cleanAtOnce {
@@ -153,7 +155,7 @@ func (l *Limiter[T]) Clean() {
 			i++
 		}
 	})
-	mu.ExecMutex(&l.cleanedMu, func() {
-		l.cleaned = false
+	mu.ExecMutex(&l.cleaningMu, func() {
+		l.cleaning = false
 	})
 }

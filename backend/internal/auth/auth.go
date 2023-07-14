@@ -11,6 +11,7 @@
 package auth
 
 import (
+	"github.com/logisshtick/mono/pkg/cryptograph"
 	"sync"
 )
 
@@ -44,26 +45,20 @@ type tokenMs struct {
 	refreshTsRmu sync.RWMutex
 }
 
-func newTokenMs() tokenMs {
-	return tokenMs{
+var (
+	// is package inited
+	inited bool
+	maps   = tokenMs{
 		accessTs:  make(map[uint64]token, mapSize),
 		refreshTs: make(map[string]token, mapSize),
 	}
-}
-
-var (
-	// is package inited
-	inited = false
-	maps   = newTokenMs()
 )
 
 // private init method mostly used
 // to set vars based on constant
 // and not to do it in frequently
 // called functions
-func init() {
-	hashVarSet()
-}
+// func init() {}
 
 // public init method that used
 // for activate logic that can return error
@@ -72,7 +67,7 @@ func Init() error {
 		return nil
 	}
 
-	err := initChecks()
+	err := cryptograph.Init()
 	if err != nil {
 		return err
 	}

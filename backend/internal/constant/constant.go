@@ -12,6 +12,7 @@ type constants struct {
 	RegMaxEmailLen    int
 	MaxHttpBodyLen    int64
 	MaxDeviceIdLen    int
+	MaxPowLen         int
 }
 
 var (
@@ -24,6 +25,7 @@ var (
 		RegMaxEmailLen:    256,
 		MaxHttpBodyLen:    16384,
 		MaxDeviceIdLen:    4096,
+		MaxPowLen:         32,
 	}
 )
 

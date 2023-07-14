@@ -7,11 +7,11 @@ import (
 
 // insert new user in users table in db
 // returns error
-func InsertUser(conn *pgx.Conn, email, nick, pass string) error {
+func InsertUser(conn *pgx.Conn, email, nick, pass, pow string) error {
 	_, err := conn.Exec(context.Background(),
-		`INSERT INTO users (username, password, email)
-		 VALUES ($1, $2, $3)`,
-		nick, pass, email,
+		`INSERT INTO users (username, password, pow, email)
+		 VALUES ($1, $2, $3, $4)`,
+		nick, pass, pow, email,
 	)
 	if err != nil {
 		return err

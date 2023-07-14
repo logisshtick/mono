@@ -1,2 +1,5 @@
 # vim users swag
 *.swp
+
+# elementary code editor swag
+*~

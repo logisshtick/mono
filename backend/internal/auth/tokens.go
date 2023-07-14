@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/logisshtick/mono/internal/constant"
+	"github.com/logisshtick/mono/pkg/cryptograph"
 	"github.com/logisshtick/mono/pkg/mu"
 )
 
@@ -51,11 +52,11 @@ func ValidateAccessToken(tkn uint64) (bool, error) {
 func GenTokensPair(id int, deviceId uint64) (uint64, string, error) {
 	timeNow := time.Now().Unix()
 
-	hash, err := genHash() // access token
+	hash, err := cryptograph.GenRandHash() // access token
 	if err != nil {
 		return 0, "", err
 	}
-	uid, err := genUuid() // refresh token (realization may be changed)
+	uid, err := cryptograph.GenRandUuid() // refresh token (realization may be changed)
 	if err != nil {
 		return 0, "", err
 	}

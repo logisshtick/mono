@@ -35,8 +35,9 @@ import (
 	"github.com/logisshtick/mono/internal/vars"
 
 	"github.com/cespare/xxhash"
-	"github.com/logisshtick/mono/pkg/limiter"
 	"github.com/jackc/pgx/v5"
+	"github.com/logisshtick/mono/pkg/cryptograph"
+	"github.com/logisshtick/mono/pkg/limiter"
 )
 
 type input struct {
@@ -55,9 +56,9 @@ var (
 	wlog     *log.Logger
 	elog     *log.Logger
 
-	dbConn *pgx.Conn
-
-	limit *limiter.Limiter[uint64]
+	dbConn    *pgx.Conn
+	limit     *limiter.Limiter[uint64]
+	globalPow string
 )
 
 func Start(ep string, m *log.Logger, w *log.Logger, e *log.Logger) error {
@@ -69,11 +70,16 @@ func Start(ep string, m *log.Logger, w *log.Logger, e *log.Logger) error {
 	var err error
 	dbConn, err = pgx.Connect(context.Background(), utils.GetDbUrl())
 	if err != nil {
-		elog.Printf("%s database connection failed %v", endPoint, err)
+		elog.Printf("%s database connection failed: %v", endPoint, err)
 		return err
 	}
 
 	limit = limiter.New[uint64](10, 1800, 2048, 4096, 20)
+	globalPow, err = utils.GetGlobalPow()
+	if err != nil {
+		elog.Printf("%s pow error: %v", endPoint, err)
+		return err
+	}
 
 	mlog.Printf("%s reg module inited\n", endPoint)
 	return nil
@@ -125,7 +131,23 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = db.InsertUser(dbConn, in.Email, in.Nick, in.Pass)
+	pow, err := cryptograph.GenRandPow(constant.C.MaxPowLen)
+	if err != nil {
+		elog.Printf("%s error with pow gen: %v", endPoint, err)
+		out.Err = vars.ErrWithPowGen.Error()
+		utils.WriteJsonAndStatusInRespone(w, &out,
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	hashedPass := cryptograph.HashPass(
+		utils.PowCat(
+			utils.PowCat(in.Pass, pow),
+			globalPow,
+		),
+	)
+	err = db.InsertUser(dbConn, in.Email, in.Nick, hashedPass, pow)
 	if err != nil {
 		elog.Printf("%s error with db insert: %v", endPoint, err)
 		out.Err = vars.ErrWithDb.Error()
@@ -133,21 +155,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			http.StatusInternalServerError,
 		)
 		return
-	}
-
-	mlog.Println()
-	rows, _ := dbConn.Query(context.Background(), "select * from users")
-	defer rows.Close()
-
-	for rows.Next() {
-		var (
-			id int
-			username string
-			password string
-			email string
-		)
-		rows.Scan(&id, &username, &password, &email)
-		mlog.Printf("%d | %s | %s | %s", id, username, password, email)
 	}
 
 	out.Err = "nil"
